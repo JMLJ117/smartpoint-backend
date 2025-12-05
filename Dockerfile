@@ -1,7 +1,7 @@
 # ---------------------------------------------------
 # ETAPA 1: Constructor (Builder)
 # ---------------------------------------------------
-FROM rust:1.75-slim-bookworm as builder
+FROM rust:1.82-slim-bookworm as builder
 
 WORKDIR /usr/src/app
 
