@@ -1,0 +1,28 @@
+[package]
+name = "smartpoint_api"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+axum = "0.7"
+tokio = { version = "1", features = ["full"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1.0"
+dotenvy = "0.15"
+rust_decimal = { version = "1.35", features = ["serde-float"] }
+tower-http = { version = "0.5", features = ["cors"] }
+chrono = { version = "0.4", features = ["serde"] }
+
+# Seguridad
+argon2 = "0.5"
+rand_core = { version = "0.6", features = ["std"] }
+
+# Base de datos
+sqlx = { version = "0.7", features = [
+    "runtime-tokio-rustls",
+    "mysql",
+    "macros",
+    "json",
+    "rust_decimal",
+    "chrono"
+] }

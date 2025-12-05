@@ -1,0 +1,12 @@
+{
+  "db_name": "MySQL",
+  "query": "CALL sp_editar_usuario(?, ?, ?, ?, ?)",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 5
+    },
+    "nullable": []
+  },
+  "hash": "6d0018646125399a7ddf3df857d24b6f0bfdbee82c3aa2ee018a609bfb204b5c"
+}

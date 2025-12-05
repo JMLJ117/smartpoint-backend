@@ -1,0 +1,12 @@
+# Ignorar dependencias descargadas
+/target
+
+# Ignorar archivos de IDE
+.idea/
+.vscode/
+
+# Ignorar variables de entorno
+.env
+
+# Logs de Rust
+*.log

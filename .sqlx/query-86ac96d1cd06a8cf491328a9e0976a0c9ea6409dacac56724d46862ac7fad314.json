@@ -1,0 +1,12 @@
+{
+  "db_name": "MySQL",
+  "query": "CALL sp_cancelar_venta(?)",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 1
+    },
+    "nullable": []
+  },
+  "hash": "86ac96d1cd06a8cf491328a9e0976a0c9ea6409dacac56724d46862ac7fad314"
+}

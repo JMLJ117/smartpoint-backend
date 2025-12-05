@@ -1,0 +1,12 @@
+{
+  "db_name": "MySQL",
+  "query": "CALL sp_eliminar_usuario(?)",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 1
+    },
+    "nullable": []
+  },
+  "hash": "ba3e7f2ff704224f27c80b03da0cfd73755e252ede8ffcebaa19475b8a8c527b"
+}

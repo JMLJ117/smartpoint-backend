@@ -1,0 +1,25 @@
+{
+  "db_name": "MySQL",
+  "query": "SELECT SUM(subtotal) AS total_pagado FROM detalle_ventas WHERE idventas = ?",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "total_pagado",
+        "type_info": {
+          "type": "NewDecimal",
+          "flags": "BINARY",
+          "char_set": 63,
+          "max_size": 34
+        }
+      }
+    ],
+    "parameters": {
+      "Right": 1
+    },
+    "nullable": [
+      true
+    ]
+  },
+  "hash": "cac1031775103a2d6f79d8874cba2fa0cd5ad59baf317db565b51606d52bcc0a"
+}

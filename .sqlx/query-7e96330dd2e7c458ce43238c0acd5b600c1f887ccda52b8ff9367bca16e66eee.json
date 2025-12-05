@@ -1,0 +1,102 @@
+{
+  "db_name": "MySQL",
+  "query": "SELECT p.codigo_producto, p.fldNombre, p.fldPrecio, p.fldMarca, dp.descripcion, dp.unidades,\n           (SELECT GROUP_CONCAT(c.fldNombre SEPARATOR ', ') FROM categorias_x_productos cxp JOIN categorias c ON cxp.id_categorias = c.id_categorias WHERE cxp.codigo_producto = p.codigo_producto) as categorias_nombres,\n           (SELECT GROUP_CONCAT(cxp.id_categorias SEPARATOR ',') FROM categorias_x_productos cxp WHERE cxp.codigo_producto = p.codigo_producto) as categorias_ids\n           FROM productos p JOIN detalle_productos dp ON p.id_detalle_producto = dp.id_detalle_producto",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "codigo_producto",
+        "type_info": {
+          "type": "Long",
+          "flags": "PRIMARY_KEY | AUTO_INCREMENT",
+          "char_set": 63,
+          "max_size": 11
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "fldNombre",
+        "type_info": {
+          "type": "VarString",
+          "flags": "NO_DEFAULT_VALUE",
+          "char_set": 224,
+          "max_size": 400
+        }
+      },
+      {
+        "ordinal": 2,
+        "name": "fldPrecio",
+        "type_info": {
+          "type": "NewDecimal",
+          "flags": "NO_DEFAULT_VALUE",
+          "char_set": 63,
+          "max_size": 12
+        }
+      },
+      {
+        "ordinal": 3,
+        "name": "fldMarca",
+        "type_info": {
+          "type": "VarString",
+          "flags": "",
+          "char_set": 224,
+          "max_size": 180
+        }
+      },
+      {
+        "ordinal": 4,
+        "name": "descripcion",
+        "type_info": {
+          "type": "VarString",
+          "flags": "NOT_NULL | NO_DEFAULT_VALUE",
+          "char_set": 224,
+          "max_size": 180
+        }
+      },
+      {
+        "ordinal": 5,
+        "name": "unidades",
+        "type_info": {
+          "type": "Long",
+          "flags": "NOT_NULL | NO_DEFAULT_VALUE",
+          "char_set": 63,
+          "max_size": 11
+        }
+      },
+      {
+        "ordinal": 6,
+        "name": "categorias_nombres",
+        "type_info": {
+          "type": "LongBlob",
+          "flags": "",
+          "char_set": 224,
+          "max_size": 16384
+        }
+      },
+      {
+        "ordinal": 7,
+        "name": "categorias_ids",
+        "type_info": {
+          "type": "LongBlob",
+          "flags": "",
+          "char_set": 224,
+          "max_size": 16384
+        }
+      }
+    ],
+    "parameters": {
+      "Right": 0
+    },
+    "nullable": [
+      true,
+      true,
+      true,
+      true,
+      false,
+      false,
+      true,
+      true
+    ]
+  },
+  "hash": "7e96330dd2e7c458ce43238c0acd5b600c1f887ccda52b8ff9367bca16e66eee"
+}

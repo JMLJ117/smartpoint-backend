@@ -1,0 +1,47 @@
+{
+  "db_name": "MySQL",
+  "query": "SELECT CAST(id_usuario AS CHAR) as id, fldNombre as nombre, fldContrasena as hash_contrasena FROM usuario WHERE fldCorreoElectronico = ?",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": {
+          "type": "VarString",
+          "flags": "",
+          "char_set": 224,
+          "max_size": 44
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "nombre",
+        "type_info": {
+          "type": "VarString",
+          "flags": "NOT_NULL | NO_DEFAULT_VALUE",
+          "char_set": 224,
+          "max_size": 180
+        }
+      },
+      {
+        "ordinal": 2,
+        "name": "hash_contrasena",
+        "type_info": {
+          "type": "VarString",
+          "flags": "NOT_NULL | NO_DEFAULT_VALUE",
+          "char_set": 224,
+          "max_size": 1020
+        }
+      }
+    ],
+    "parameters": {
+      "Right": 1
+    },
+    "nullable": [
+      true,
+      false,
+      false
+    ]
+  },
+  "hash": "2c33ed25eb0008c9ccb94d0fa26beae07b33d314acddf2db4f601d23cef697da"
+}

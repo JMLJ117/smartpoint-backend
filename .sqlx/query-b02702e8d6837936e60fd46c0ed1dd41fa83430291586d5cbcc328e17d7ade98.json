@@ -1,0 +1,12 @@
+{
+  "db_name": "MySQL",
+  "query": "CALL sp_editar_cliente(?, ?, ?, ?, ?)",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 5
+    },
+    "nullable": []
+  },
+  "hash": "b02702e8d6837936e60fd46c0ed1dd41fa83430291586d5cbcc328e17d7ade98"
+}

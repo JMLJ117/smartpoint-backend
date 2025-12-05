@@ -1,0 +1,12 @@
+{
+  "db_name": "MySQL",
+  "query": "CALL sp_registrar_consulta(?, ?, ?, ?)",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 4
+    },
+    "nullable": []
+  },
+  "hash": "0d1d4fa8e1b6148558c284a1d646db2b0fa461d7c49ed645dfe2aea706239f74"
+}

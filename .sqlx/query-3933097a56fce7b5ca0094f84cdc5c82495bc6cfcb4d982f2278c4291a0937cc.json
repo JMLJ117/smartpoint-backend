@@ -1,0 +1,58 @@
+{
+  "db_name": "MySQL",
+  "query": "SELECT telefono, fldNombres, fldApellidos, fldCorreoElectronico FROM cliente ORDER BY fldNombres",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "telefono",
+        "type_info": {
+          "type": "VarString",
+          "flags": "NOT_NULL | PRIMARY_KEY | NO_DEFAULT_VALUE",
+          "char_set": 224,
+          "max_size": 40
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "fldNombres",
+        "type_info": {
+          "type": "VarString",
+          "flags": "NOT_NULL | NO_DEFAULT_VALUE",
+          "char_set": 224,
+          "max_size": 180
+        }
+      },
+      {
+        "ordinal": 2,
+        "name": "fldApellidos",
+        "type_info": {
+          "type": "VarString",
+          "flags": "NOT_NULL | NO_DEFAULT_VALUE",
+          "char_set": 224,
+          "max_size": 180
+        }
+      },
+      {
+        "ordinal": 3,
+        "name": "fldCorreoElectronico",
+        "type_info": {
+          "type": "VarString",
+          "flags": "",
+          "char_set": 224,
+          "max_size": 400
+        }
+      }
+    ],
+    "parameters": {
+      "Right": 0
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      true
+    ]
+  },
+  "hash": "3933097a56fce7b5ca0094f84cdc5c82495bc6cfcb4d982f2278c4291a0937cc"
+}

@@ -1,0 +1,12 @@
+{
+  "db_name": "MySQL",
+  "query": "CALL sp_eliminar_producto_admin(?)",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 1
+    },
+    "nullable": []
+  },
+  "hash": "bc8edc9a8e1e037233175eb1fd8c5440fe67a7340a40e6532ca1f545d67c0eb3"
+}

@@ -1,0 +1,12 @@
+{
+  "db_name": "MySQL",
+  "query": "CALL sp_actualizar_producto_admin(?, ?, ?, ?, ?, ?, ?)",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 7
+    },
+    "nullable": []
+  },
+  "hash": "67a29fac2e0128c8c3ce957b6dca57d617097e7e2c9cdc647be3066e322464c0"
+}

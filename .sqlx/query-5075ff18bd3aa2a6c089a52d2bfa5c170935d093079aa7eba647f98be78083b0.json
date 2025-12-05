@@ -1,0 +1,12 @@
+{
+  "db_name": "MySQL",
+  "query": "CALL sp_agregar_producto_carrito(?, ?, ?)",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 3
+    },
+    "nullable": []
+  },
+  "hash": "5075ff18bd3aa2a6c089a52d2bfa5c170935d093079aa7eba647f98be78083b0"
+}

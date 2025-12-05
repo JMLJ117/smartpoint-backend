@@ -1,0 +1,12 @@
+{
+  "db_name": "MySQL",
+  "query": "INSERT INTO usuario (fldTelefono, fldNombre, fldCorreoElectronico, fldContrasena) VALUES (?, ?, ?, ?)",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 4
+    },
+    "nullable": []
+  },
+  "hash": "39848fd397916c766ac403bffaa580ce389359974ed61ac9619429ddf326eb76"
+}

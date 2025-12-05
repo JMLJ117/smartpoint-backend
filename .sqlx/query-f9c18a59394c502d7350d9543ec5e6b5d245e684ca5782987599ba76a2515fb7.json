@@ -1,0 +1,113 @@
+{
+  "db_name": "MySQL",
+  "query": "SELECT dv.idventas, dv.codigo_producto, p.fldNombre AS Producto, p.fldMarca AS Marca, dp.descripcion AS DetalleDescripcion, dp.unidades AS DetalleUnidades, p.fldPrecio AS PrecioUnitario, dv.cantidad, dv.subtotal FROM detalle_ventas dv INNER JOIN productos p ON dv.codigo_producto = p.codigo_producto INNER JOIN detalle_productos dp ON p.id_detalle_producto = dp.id_detalle_producto WHERE dv.idventas = ? ORDER BY p.fldNombre",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "idventas",
+        "type_info": {
+          "type": "Long",
+          "flags": "NOT_NULL | PRIMARY_KEY | NO_DEFAULT_VALUE",
+          "char_set": 63,
+          "max_size": 11
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "codigo_producto",
+        "type_info": {
+          "type": "Long",
+          "flags": "NOT_NULL | PRIMARY_KEY | MULTIPLE_KEY | NO_DEFAULT_VALUE",
+          "char_set": 63,
+          "max_size": 11
+        }
+      },
+      {
+        "ordinal": 2,
+        "name": "Producto",
+        "type_info": {
+          "type": "VarString",
+          "flags": "NOT_NULL | NO_DEFAULT_VALUE",
+          "char_set": 224,
+          "max_size": 400
+        }
+      },
+      {
+        "ordinal": 3,
+        "name": "Marca",
+        "type_info": {
+          "type": "VarString",
+          "flags": "",
+          "char_set": 224,
+          "max_size": 180
+        }
+      },
+      {
+        "ordinal": 4,
+        "name": "DetalleDescripcion",
+        "type_info": {
+          "type": "VarString",
+          "flags": "NOT_NULL | NO_DEFAULT_VALUE",
+          "char_set": 224,
+          "max_size": 180
+        }
+      },
+      {
+        "ordinal": 5,
+        "name": "DetalleUnidades",
+        "type_info": {
+          "type": "Long",
+          "flags": "NOT_NULL | NO_DEFAULT_VALUE",
+          "char_set": 63,
+          "max_size": 11
+        }
+      },
+      {
+        "ordinal": 6,
+        "name": "PrecioUnitario",
+        "type_info": {
+          "type": "NewDecimal",
+          "flags": "NOT_NULL | NO_DEFAULT_VALUE",
+          "char_set": 63,
+          "max_size": 12
+        }
+      },
+      {
+        "ordinal": 7,
+        "name": "cantidad",
+        "type_info": {
+          "type": "Long",
+          "flags": "NOT_NULL | NO_DEFAULT_VALUE",
+          "char_set": 63,
+          "max_size": 11
+        }
+      },
+      {
+        "ordinal": 8,
+        "name": "subtotal",
+        "type_info": {
+          "type": "NewDecimal",
+          "flags": "NOT_NULL | NO_DEFAULT_VALUE",
+          "char_set": 63,
+          "max_size": 12
+        }
+      }
+    ],
+    "parameters": {
+      "Right": 1
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false
+    ]
+  },
+  "hash": "f9c18a59394c502d7350d9543ec5e6b5d245e684ca5782987599ba76a2515fb7"
+}

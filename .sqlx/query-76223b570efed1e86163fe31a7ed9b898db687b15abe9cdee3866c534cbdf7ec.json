@@ -1,0 +1,69 @@
+{
+  "db_name": "MySQL",
+  "query": "SELECT v.idventas, v.fldFecha as fecha, v.estado, c.fldNombres as cliente, (SELECT COALESCE(SUM(subtotal), 0) FROM detalle_ventas WHERE idventas = v.idventas) as total FROM ventas v INNER JOIN cliente c ON v.telefono = c.telefono ORDER BY v.fldFecha DESC",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "idventas",
+        "type_info": {
+          "type": "Long",
+          "flags": "PRIMARY_KEY | AUTO_INCREMENT",
+          "char_set": 63,
+          "max_size": 11
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "fecha",
+        "type_info": {
+          "type": "Datetime",
+          "flags": "BINARY",
+          "char_set": 63,
+          "max_size": 19
+        }
+      },
+      {
+        "ordinal": 2,
+        "name": "estado",
+        "type_info": {
+          "type": "String",
+          "flags": "ENUM",
+          "char_set": 224,
+          "max_size": 36
+        }
+      },
+      {
+        "ordinal": 3,
+        "name": "cliente",
+        "type_info": {
+          "type": "VarString",
+          "flags": "NOT_NULL | NO_DEFAULT_VALUE",
+          "char_set": 224,
+          "max_size": 180
+        }
+      },
+      {
+        "ordinal": 4,
+        "name": "total",
+        "type_info": {
+          "type": "NewDecimal",
+          "flags": "BINARY",
+          "char_set": 63,
+          "max_size": 34
+        }
+      }
+    ],
+    "parameters": {
+      "Right": 0
+    },
+    "nullable": [
+      true,
+      true,
+      true,
+      false,
+      true
+    ]
+  },
+  "hash": "76223b570efed1e86163fe31a7ed9b898db687b15abe9cdee3866c534cbdf7ec"
+}

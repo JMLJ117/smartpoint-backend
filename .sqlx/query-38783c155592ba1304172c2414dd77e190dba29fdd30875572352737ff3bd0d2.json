@@ -1,0 +1,12 @@
+{
+  "db_name": "MySQL",
+  "query": "CALL sp_eliminar_producto_carrito(?, ?)",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 2
+    },
+    "nullable": []
+  },
+  "hash": "38783c155592ba1304172c2414dd77e190dba29fdd30875572352737ff3bd0d2"
+}

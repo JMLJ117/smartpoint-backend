@@ -1,0 +1,12 @@
+{
+  "db_name": "MySQL",
+  "query": "CALL sp_eliminar_cliente(?)",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 1
+    },
+    "nullable": []
+  },
+  "hash": "e9d5b2ea658db433ae6d4769485c15635c36f1d2de7fa1581b87d313d9dc4d5e"
+}

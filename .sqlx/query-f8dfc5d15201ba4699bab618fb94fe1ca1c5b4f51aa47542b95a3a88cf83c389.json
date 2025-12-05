@@ -1,0 +1,12 @@
+{
+  "db_name": "MySQL",
+  "query": "CALL sp_crear_producto_admin(?, ?, ?, ?, ?, ?)",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 6
+    },
+    "nullable": []
+  },
+  "hash": "f8dfc5d15201ba4699bab618fb94fe1ca1c5b4f51aa47542b95a3a88cf83c389"
+}

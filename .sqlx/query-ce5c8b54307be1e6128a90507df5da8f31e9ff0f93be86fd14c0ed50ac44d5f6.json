@@ -1,0 +1,12 @@
+{
+  "db_name": "MySQL",
+  "query": "CALL sp_actualizar_producto_carrito(?, ?, ?)",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 3
+    },
+    "nullable": []
+  },
+  "hash": "ce5c8b54307be1e6128a90507df5da8f31e9ff0f93be86fd14c0ed50ac44d5f6"
+}

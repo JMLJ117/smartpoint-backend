@@ -1,0 +1,69 @@
+{
+  "db_name": "MySQL",
+  "query": "SELECT c.fldNombre AS Categoria, p.codigo_producto, p.fldNombre AS Producto, p.fldPrecio, p.fldMarca FROM categorias c INNER JOIN categorias_x_productos cp ON c.id_categorias = cp.id_categorias INNER JOIN productos p ON cp.codigo_producto = p.codigo_producto WHERE c.id_categorias = ? AND c.visible = 1 ORDER BY p.fldNombre",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "Categoria",
+        "type_info": {
+          "type": "VarString",
+          "flags": "NOT_NULL | NO_DEFAULT_VALUE",
+          "char_set": 224,
+          "max_size": 180
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "codigo_producto",
+        "type_info": {
+          "type": "Long",
+          "flags": "NOT_NULL | PRIMARY_KEY | AUTO_INCREMENT",
+          "char_set": 63,
+          "max_size": 11
+        }
+      },
+      {
+        "ordinal": 2,
+        "name": "Producto",
+        "type_info": {
+          "type": "VarString",
+          "flags": "NOT_NULL | NO_DEFAULT_VALUE",
+          "char_set": 224,
+          "max_size": 400
+        }
+      },
+      {
+        "ordinal": 3,
+        "name": "fldPrecio",
+        "type_info": {
+          "type": "NewDecimal",
+          "flags": "NOT_NULL | NO_DEFAULT_VALUE",
+          "char_set": 63,
+          "max_size": 12
+        }
+      },
+      {
+        "ordinal": 4,
+        "name": "fldMarca",
+        "type_info": {
+          "type": "VarString",
+          "flags": "",
+          "char_set": 224,
+          "max_size": 180
+        }
+      }
+    ],
+    "parameters": {
+      "Right": 1
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      true
+    ]
+  },
+  "hash": "a0c044b90132ada02f8ef12a7b7d534c5d578cebab0fa9d9db11381435ad944c"
+}

@@ -1,0 +1,36 @@
+{
+  "db_name": "MySQL",
+  "query": "SELECT id_tipo, fldOpciones FROM tipo_consulta",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id_tipo",
+        "type_info": {
+          "type": "Long",
+          "flags": "NOT_NULL | PRIMARY_KEY | AUTO_INCREMENT",
+          "char_set": 63,
+          "max_size": 11
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "fldOpciones",
+        "type_info": {
+          "type": "VarString",
+          "flags": "NOT_NULL | NO_DEFAULT_VALUE",
+          "char_set": 224,
+          "max_size": 180
+        }
+      }
+    ],
+    "parameters": {
+      "Right": 0
+    },
+    "nullable": [
+      false,
+      false
+    ]
+  },
+  "hash": "93b63a707c0a7adc2db865ad27a6a1745431752553f72fda1475edf49a07d26b"
+}

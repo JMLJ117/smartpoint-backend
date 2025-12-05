@@ -1,0 +1,12 @@
+{
+  "db_name": "MySQL",
+  "query": "INSERT INTO ventas (fldFecha, telefono, id_usuario, estado) VALUES (NOW(), ?, ?, 'pendiente')",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 2
+    },
+    "nullable": []
+  },
+  "hash": "6e39777d02b8c2c42d69d84cb55c6c24a2457bf7f4211b74d0be794c697d3d77"
+}

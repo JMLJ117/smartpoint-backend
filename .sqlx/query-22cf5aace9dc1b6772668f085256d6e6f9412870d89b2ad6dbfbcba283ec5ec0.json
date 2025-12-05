@@ -1,0 +1,47 @@
+{
+  "db_name": "MySQL",
+  "query": "SELECT telefono as id, fldNombres as nombre, fldContrasena as hash_contrasena FROM cliente WHERE fldCorreoElectronico = ?",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": {
+          "type": "VarString",
+          "flags": "NOT_NULL | PRIMARY_KEY | NO_DEFAULT_VALUE",
+          "char_set": 224,
+          "max_size": 40
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "nombre",
+        "type_info": {
+          "type": "VarString",
+          "flags": "NOT_NULL | NO_DEFAULT_VALUE",
+          "char_set": 224,
+          "max_size": 180
+        }
+      },
+      {
+        "ordinal": 2,
+        "name": "hash_contrasena",
+        "type_info": {
+          "type": "VarString",
+          "flags": "",
+          "char_set": 224,
+          "max_size": 1020
+        }
+      }
+    ],
+    "parameters": {
+      "Right": 1
+    },
+    "nullable": [
+      false,
+      false,
+      true
+    ]
+  },
+  "hash": "22cf5aace9dc1b6772668f085256d6e6f9412870d89b2ad6dbfbcba283ec5ec0"
+}

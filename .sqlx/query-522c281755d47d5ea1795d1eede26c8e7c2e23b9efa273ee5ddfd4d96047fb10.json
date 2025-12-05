@@ -1,0 +1,25 @@
+{
+  "db_name": "MySQL",
+  "query": "SELECT LAST_INSERT_ID() as idventas",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "idventas",
+        "type_info": {
+          "type": "LongLong",
+          "flags": "NOT_NULL | UNSIGNED | BINARY",
+          "char_set": 63,
+          "max_size": 21
+        }
+      }
+    ],
+    "parameters": {
+      "Right": 0
+    },
+    "nullable": [
+      false
+    ]
+  },
+  "hash": "522c281755d47d5ea1795d1eede26c8e7c2e23b9efa273ee5ddfd4d96047fb10"
+}

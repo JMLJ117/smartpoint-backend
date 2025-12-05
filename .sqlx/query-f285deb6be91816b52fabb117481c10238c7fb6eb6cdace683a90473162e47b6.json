@@ -1,0 +1,47 @@
+{
+  "db_name": "MySQL",
+  "query": "SELECT id_categorias, fldNombre, fldDescripcion FROM categorias WHERE visible = 1",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id_categorias",
+        "type_info": {
+          "type": "Long",
+          "flags": "NOT_NULL | PRIMARY_KEY | AUTO_INCREMENT",
+          "char_set": 63,
+          "max_size": 11
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "fldNombre",
+        "type_info": {
+          "type": "VarString",
+          "flags": "NOT_NULL | NO_DEFAULT_VALUE",
+          "char_set": 224,
+          "max_size": 180
+        }
+      },
+      {
+        "ordinal": 2,
+        "name": "fldDescripcion",
+        "type_info": {
+          "type": "VarString",
+          "flags": "NOT_NULL | NO_DEFAULT_VALUE",
+          "char_set": 224,
+          "max_size": 400
+        }
+      }
+    ],
+    "parameters": {
+      "Right": 0
+    },
+    "nullable": [
+      false,
+      false,
+      false
+    ]
+  },
+  "hash": "f285deb6be91816b52fabb117481c10238c7fb6eb6cdace683a90473162e47b6"
+}

@@ -1,0 +1,12 @@
+{
+  "db_name": "MySQL",
+  "query": "INSERT INTO comprobante (id_tipo_pago, idventas) VALUES (?, ?)",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 2
+    },
+    "nullable": []
+  },
+  "hash": "7a36c16450a28023012f9533d0ee661844ef5fdafecc9a82ccd1c5c4edbc91a6"
+}
