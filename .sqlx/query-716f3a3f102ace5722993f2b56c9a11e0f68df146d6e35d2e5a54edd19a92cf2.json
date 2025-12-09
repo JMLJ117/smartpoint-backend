@@ -1,0 +1,102 @@
+{
+  "db_name": "MySQL",
+  "query": "\n        SELECT \n            c.id_consulta,\n            cl.fldNombres AS cliente_nombre,\n            cl.fldApellidos AS cliente_apellido,\n            cl.fldCorreoElectronico AS cliente_email,\n            c.telefono,\n            tc.fldOpciones AS tipo_consulta,\n            c.fldAsunto AS asunto,\n            c.fldMensaje AS mensaje\n        FROM consulta c\n        INNER JOIN cliente cl ON c.telefono = cl.telefono\n        INNER JOIN tipo_consulta tc ON c.id_tipo = tc.id_tipo\n        ORDER BY c.id_consulta DESC\n        ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id_consulta",
+        "type_info": {
+          "type": "Long",
+          "flags": "NOT_NULL | PRIMARY_KEY | AUTO_INCREMENT",
+          "char_set": 63,
+          "max_size": 11
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "cliente_nombre",
+        "type_info": {
+          "type": "VarString",
+          "flags": "NOT_NULL | NO_DEFAULT_VALUE",
+          "char_set": 224,
+          "max_size": 180
+        }
+      },
+      {
+        "ordinal": 2,
+        "name": "cliente_apellido",
+        "type_info": {
+          "type": "VarString",
+          "flags": "NOT_NULL | NO_DEFAULT_VALUE",
+          "char_set": 224,
+          "max_size": 180
+        }
+      },
+      {
+        "ordinal": 3,
+        "name": "cliente_email",
+        "type_info": {
+          "type": "VarString",
+          "flags": "",
+          "char_set": 224,
+          "max_size": 400
+        }
+      },
+      {
+        "ordinal": 4,
+        "name": "telefono",
+        "type_info": {
+          "type": "VarString",
+          "flags": "NOT_NULL | MULTIPLE_KEY | NO_DEFAULT_VALUE",
+          "char_set": 224,
+          "max_size": 40
+        }
+      },
+      {
+        "ordinal": 5,
+        "name": "tipo_consulta",
+        "type_info": {
+          "type": "VarString",
+          "flags": "NOT_NULL | NO_DEFAULT_VALUE",
+          "char_set": 224,
+          "max_size": 180
+        }
+      },
+      {
+        "ordinal": 6,
+        "name": "asunto",
+        "type_info": {
+          "type": "VarString",
+          "flags": "NOT_NULL | NO_DEFAULT_VALUE",
+          "char_set": 224,
+          "max_size": 180
+        }
+      },
+      {
+        "ordinal": 7,
+        "name": "mensaje",
+        "type_info": {
+          "type": "VarString",
+          "flags": "NOT_NULL | NO_DEFAULT_VALUE",
+          "char_set": 224,
+          "max_size": 800
+        }
+      }
+    ],
+    "parameters": {
+      "Right": 0
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      true,
+      false,
+      false,
+      false,
+      false
+    ]
+  },
+  "hash": "716f3a3f102ace5722993f2b56c9a11e0f68df146d6e35d2e5a54edd19a92cf2"
+}

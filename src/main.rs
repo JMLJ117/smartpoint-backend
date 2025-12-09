@@ -1,13 +1,14 @@
 /*
 ==========================================================
-    API REST SmartPoint v7
+    API REST SmartPoint v9
     - Seguridad: Argon2
     - Roles: Cliente y Administrador
+    - Buscador y Reportes listo
 ==========================================================
 */
 
 use axum::{
-    extract::{Path, State},
+    extract::{Path, Query, State},
     http::StatusCode,
     response::{IntoResponse, Response},
     routing::{get, post, put, delete},
@@ -50,6 +51,11 @@ struct ProductoAdminPayload {
     descripcion: String,
     unidades: i32,
     categorias: Option<Vec<i32>>,
+}
+
+#[derive(Deserialize)]
+struct BuscadorQuery {
+    q: Option<String>,
 }
 
 #[allow(non_snake_case)]
@@ -165,6 +171,19 @@ struct TipoConsulta {
 }
 
 #[allow(non_snake_case)]
+#[derive(Serialize, FromRow)]
+struct ConsultaAdmin {
+    id_consulta: i32,
+    cliente_nombre: String,
+    cliente_apellido: String,
+    cliente_email: Option<String>,
+    telefono: String,
+    tipo_consulta: String,
+    asunto: String,
+    mensaje: String,
+}
+
+#[allow(non_snake_case)]
 #[derive(Deserialize)]
 struct NuevaVenta {
     telefono: String,
@@ -230,6 +249,7 @@ async fn main() {
     let app = Router::new()
         // Productos
         .route("/api/productos", get(get_all_products))
+        .route("/api/productos/buscar", get(search_products))
         .route("/api/productos/:id", get(get_product_by_id))
         .route("/api/categorias", get(get_all_categories))
         .route("/api/categorias/:id/productos", get(get_products_by_category))
@@ -261,6 +281,7 @@ async fn main() {
         .route("/api/admin/clientes/:id", put(admin_update_client).delete(admin_delete_client))
         .route("/api/clientes/:id", put(update_client))
         .route("/api/admin/ventas", get(admin_list_sales))
+        .route("/api/admin/consultas", get(admin_list_consultas))
 
         .layer(cors)
         .with_state(app_state);
@@ -367,6 +388,34 @@ async fn login_admin(State(state): State<AppState>, Json(payload): Json<LoginReq
     Err(AppError(StatusCode::UNAUTHORIZED, "Credenciales inválidas".into()))
 }
 
+async fn search_products(
+    State(state): State<AppState>,
+    Query(params): Query<BuscadorQuery>
+) -> Result<Json<Vec<Producto>>, AppError> {
+    let busqueda = params.q.unwrap_or_default();
+    let pattern = format!("%{}%", busqueda);
+
+    // Consulta corregida para incluir categorias_nombres y categorias_ids
+    let productos = sqlx::query_as!(
+        Producto,
+        r#"
+        SELECT 
+            p.codigo_producto, p.fldNombre, p.fldPrecio, p.fldMarca, dp.descripcion, dp.unidades,
+            (SELECT GROUP_CONCAT(c.fldNombre SEPARATOR ', ') FROM categorias_x_productos cxp JOIN categorias c ON cxp.id_categorias = c.id_categorias WHERE cxp.codigo_producto = p.codigo_producto) as categorias_nombres,
+            (SELECT GROUP_CONCAT(cxp.id_categorias SEPARATOR ',') FROM categorias_x_productos cxp WHERE cxp.codigo_producto = p.codigo_producto) as categorias_ids
+        FROM productos p
+        INNER JOIN detalle_productos dp ON p.id_detalle_producto = dp.id_detalle_producto
+        WHERE p.fldNombre LIKE ? OR p.fldMarca LIKE ? OR dp.descripcion LIKE ?
+        ORDER BY p.fldNombre
+        "#,
+        pattern, pattern, pattern
+    )
+    .fetch_all(&state.db)
+    .await?;
+
+    Ok(Json(productos))
+}
+
 // --- ADMIN PRODUCTOS ---
 async fn admin_create_product(State(state): State<AppState>, Json(payload): Json<ProductoAdminPayload>) -> Result<StatusCode, AppError> {
     let cats_json = serde_json::to_string(&payload.categorias).unwrap_or("[]".to_string());
@@ -436,6 +485,33 @@ async fn admin_delete_client(State(state): State<AppState>, Path(id): Path<Strin
 async fn admin_list_sales(State(state): State<AppState>) -> Result<Json<Vec<VentaReporte>>, AppError> {
     let ventas = sqlx::query_as!(VentaReporte, r#"SELECT v.idventas, v.fldFecha as fecha, v.estado, c.fldNombres as cliente, (SELECT COALESCE(SUM(subtotal), 0) FROM detalle_ventas WHERE idventas = v.idventas) as total FROM ventas v INNER JOIN cliente c ON v.telefono = c.telefono ORDER BY v.fldFecha DESC"#).fetch_all(&state.db).await?;
     Ok(Json(ventas))
+}
+
+async fn admin_list_consultas(
+    State(state): State<AppState>
+) -> Result<Json<Vec<ConsultaAdmin>>, AppError> {
+    let consultas = sqlx::query_as!(
+        ConsultaAdmin,
+        r#"
+        SELECT 
+            c.id_consulta,
+            cl.fldNombres AS cliente_nombre,
+            cl.fldApellidos AS cliente_apellido,
+            cl.fldCorreoElectronico AS cliente_email,
+            c.telefono,
+            tc.fldOpciones AS tipo_consulta,
+            c.fldAsunto AS asunto,
+            c.fldMensaje AS mensaje
+        FROM consulta c
+        INNER JOIN cliente cl ON c.telefono = cl.telefono
+        INNER JOIN tipo_consulta tc ON c.id_tipo = tc.id_tipo
+        ORDER BY c.id_consulta DESC
+        "#
+    )
+    .fetch_all(&state.db)
+    .await?;
+
+    Ok(Json(consultas))
 }
 
 // --- OTROS ---
