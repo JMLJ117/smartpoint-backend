@@ -620,3 +620,70 @@ JSON
     "total": 427.50
   }
 ]
+
+🟢 Ver Consultas de Soporte (Panel Admin)
+Esta API permite al administrador ver todos los mensajes enviados por los clientes desde el formulario de contacto.
+
+Método: GET
+
+URL: https://smartpoint-api.onrender.com/api/admin/consultas
+
+Body: Ninguno.
+
+Respuesta Exitosa (200 OK): Devuelve una lista con el detalle del cliente, el tipo de problema y el mensaje.
+
+JSON
+
+[
+    {
+        "id_consulta": 1,
+        "cliente_nombre": "Juan",
+        "cliente_apellido": "Pérez",
+        "cliente_email": "juan@example.com",
+        "telefono": "9611234567",
+        "tipo_consulta": "Producto defectuoso",
+        "asunto": "Falla de encendido",
+        "mensaje": "El kit que compré ayer no enciende."
+    }
+]
+
+🟢 Buscador de Productos (Público)
+Esta API permite filtrar productos por nombre, marca o descripción.
+
+Método: GET
+
+URL: https://smartpoint-api.onrender.com/api/productos/buscar
+
+Parámetros (Query Params):
+
+Key: q
+
+Value: (Lo que quieras buscar, ej: arduino, led, resistor)
+
+URL Completa de Ejemplo: https://smartpoint-api.onrender.com/api/productos/buscar?q=resistor
+
+Respuesta Exitosa (200 OK): Te devolverá un arreglo con los productos que coincidan.
+
+JSON
+
+[
+    {
+        "codigo_producto": 1,
+        "fldNombre": "Resistor 10k",
+        "fldPrecio": "0.50",
+        "fldMarca": "Vishay",
+        "descripcion": "Bolsa de 100 piezas",
+        "unidades": 100,
+        "categorias_nombres": "Componentes",
+        "categorias_ids": "1"
+    }
+]
+(Si no hay coincidencias, devuelve un arreglo vacío []).
+
+🟢 Eliminar consulta:
+
+Método: DELETE
+
+URL: https://smartpoint-api.onrender.com/api/admin/consultas/1 (Reemplaza 1 con el ID real de la consulta que quieres borrar)
+
+Respuesta Exitosa: 204 No Content (No devuelve nada, pero borra el registro).

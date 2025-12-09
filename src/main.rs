@@ -1,6 +1,6 @@
 /*
 ==========================================================
-    API REST SmartPoint v9
+    API REST SmartPoint v10
     - Seguridad: Argon2
     - Roles: Cliente y Administrador
     - Buscador y Reportes listo
@@ -282,6 +282,7 @@ async fn main() {
         .route("/api/clientes/:id", put(update_client))
         .route("/api/admin/ventas", get(admin_list_sales))
         .route("/api/admin/consultas", get(admin_list_consultas))
+        .route("/api/admin/consultas/:id", delete(admin_delete_consulta))
 
         .layer(cors)
         .with_state(app_state);
@@ -343,21 +344,61 @@ async fn get_products_by_category(State(state): State<AppState>, Path(id): Path<
     Ok(Json(productos))
 }
 
-async fn register_client(State(state): State<AppState>, Json(payload): Json<RegistroCliente>) -> Result<StatusCode, AppError> {
+async fn register_client(
+    State(state): State<AppState>,
+    Json(payload): Json<RegistroCliente>
+) -> Result<StatusCode, AppError> {
+    let existe = sqlx::query!(
+        "SELECT telefono FROM cliente WHERE telefono = ? OR fldCorreoElectronico = ?",
+        payload.telefono,
+        payload.fldCorreoElectronico
+    )
+    .fetch_optional(&state.db)
+    .await?;
+    // 1. Verificamos si ya existe un cliente con el mismo teléfono o correo
+    if existe.is_some() {
+        return Err(AppError(
+            StatusCode::CONFLICT, 
+            "El usuario ya está registrado (Teléfono o Correo duplicado)".into()
+        ));
+    }
+
+    // 2. Hasheamos la contraseña
     let hash = hash_password(&payload.fldContrasena)?;
-    sqlx::query!("INSERT INTO cliente (telefono, fldNombres, fldApellidos, fldCorreoElectronico, fldContrasena) VALUES (?, ?, ?, ?, ?)", payload.telefono, payload.fldNombres, payload.fldApellidos, payload.fldCorreoElectronico, hash).execute(&state.db).await?;
+
+    // 3. Insertamos el nuevo cliente en la base de datos
+    sqlx::query!(
+        "INSERT INTO cliente (telefono, fldNombres, fldApellidos, fldCorreoElectronico, fldContrasena) VALUES (?, ?, ?, ?, ?)",
+        payload.telefono, 
+        payload.fldNombres, 
+        payload.fldApellidos, 
+        payload.fldCorreoElectronico, 
+        hash
+    )
+    .execute(&state.db)
+    .await?;
+
     Ok(StatusCode::CREATED)
 }
 
 async fn login_client(State(state): State<AppState>, Json(payload): Json<LoginRequest>) -> Result<Json<LoginResponse>, AppError> {
-    let user = sqlx::query_as!(CredencialDB, "SELECT telefono as id, fldNombres as nombre, fldContrasena as hash_contrasena FROM cliente WHERE fldCorreoElectronico = ?", payload.correo).fetch_optional(&state.db).await?;
-    if let Some(u) = user {
-        if let Some(h) = u.hash_contrasena {
-            if verify_password(&payload.contrasena, &h) {
-                return Ok(Json(LoginResponse { id: u.id.unwrap_or_default(), nombre: u.nombre, rol: "cliente".into(), token: "jwt_token".into() }));
-            }
+    let user_option = sqlx::query_as!(
+        CredencialDB, 
+        "SELECT telefono as id, fldNombres as nombre, fldContrasena as hash_contrasena FROM cliente WHERE fldCorreoElectronico = ?", 
+        payload.correo
+    ).fetch_optional(&state.db).await?;
+
+    // 1. Verificamos si el usuario existe
+    let u = user_option.ok_or(AppError(StatusCode::NOT_FOUND, "El usuario no está registrado".into()))?;
+
+    // 2. Si existe, verificamos la contraseña
+    if let Some(h) = u.hash_contrasena {
+        if verify_password(&payload.contrasena, &h) {
+            return Ok(Json(LoginResponse { id: u.id.unwrap_or_default(), nombre: u.nombre, rol: "cliente".into(), token: "jwt_token_cliente".into() }));
         }
     }
+    
+    // 3. Contraseña incorrecta
     Err(AppError(StatusCode::UNAUTHORIZED, "Credenciales inválidas".into()))
 }
 
@@ -370,19 +411,50 @@ async fn update_client(State(state): State<AppState>, Path(id): Path<String>, Js
     Ok(StatusCode::OK)
 }
 
-async fn register_admin(State(state): State<AppState>, Json(payload): Json<RegistroAdmin>) -> Result<StatusCode, AppError> {
+async fn register_admin(
+    State(state): State<AppState>,
+    Json(payload): Json<RegistroAdmin>
+) -> Result<StatusCode, AppError> {
+
+    // 1. Verificar si ya existe un administrador con el mismo teléfono o correo
+    let existe = sqlx::query!(
+        "SELECT id_usuario FROM usuario WHERE fldTelefono = ? OR fldCorreoElectronico = ?",
+        payload.fldTelefono,
+        payload.fldCorreoElectronico
+    )
+    .fetch_optional(&state.db)
+    .await?;
+    // Si ya existe, retornamos un error de conflicto
+    if existe.is_some() {
+        return Err(AppError(
+            StatusCode::CONFLICT, 
+            "El administrador ya existe (Teléfono o Correo duplicado)".into()
+        ));
+    }
+
+    // 2. Hash de la Contraseña
     let hash = hash_password(&payload.fldContrasena)?;
-    sqlx::query!("INSERT INTO usuario (fldTelefono, fldNombre, fldCorreoElectronico, fldContrasena) VALUES (?, ?, ?, ?)", payload.fldTelefono, payload.fldNombre, payload.fldCorreoElectronico, hash).execute(&state.db).await?;
+    
+    sqlx::query!(
+        "INSERT INTO usuario (fldTelefono, fldNombre, fldCorreoElectronico, fldContrasena) VALUES (?, ?, ?, ?)",
+        payload.fldTelefono, payload.fldNombre, payload.fldCorreoElectronico, hash
+    ).execute(&state.db).await?;
+
     Ok(StatusCode::CREATED)
 }
 
 async fn login_admin(State(state): State<AppState>, Json(payload): Json<LoginRequest>) -> Result<Json<LoginResponse>, AppError> {
-    let user = sqlx::query_as!(CredencialDB, "SELECT CAST(id_usuario AS CHAR) as id, fldNombre as nombre, fldContrasena as hash_contrasena FROM usuario WHERE fldCorreoElectronico = ?", payload.correo).fetch_optional(&state.db).await?;
-    if let Some(u) = user {
-        if let Some(h) = u.hash_contrasena {
-            if verify_password(&payload.contrasena, &h) {
-                return Ok(Json(LoginResponse { id: u.id.unwrap_or_default(), nombre: u.nombre, rol: "admin".into(), token: "jwt_token".into() }));
-            }
+    let user_option = sqlx::query_as!(
+        CredencialDB, 
+        "SELECT CAST(id_usuario AS CHAR) as id, fldNombre as nombre, fldContrasena as hash_contrasena FROM usuario WHERE fldCorreoElectronico = ?", 
+        payload.correo
+    ).fetch_optional(&state.db).await?;
+
+    let u = user_option.ok_or(AppError(StatusCode::NOT_FOUND, "El administrador no existe".into()))?;
+
+    if let Some(h) = u.hash_contrasena {
+        if verify_password(&payload.contrasena, &h) {
+            return Ok(Json(LoginResponse { id: u.id.unwrap_or_default(), nombre: u.nombre, rol: "admin".into(), token: "jwt_token_admin".into() }));
         }
     }
     Err(AppError(StatusCode::UNAUTHORIZED, "Credenciales inválidas".into()))
@@ -512,6 +584,23 @@ async fn admin_list_consultas(
     .await?;
 
     Ok(Json(consultas))
+}
+
+async fn admin_delete_consulta(
+    State(state): State<AppState>,
+    Path(id): Path<i32>
+) -> Result<StatusCode, AppError> {
+    // Borrado directo en la tabla consulta
+    let result = sqlx::query("DELETE FROM consulta WHERE id_consulta = ?")
+        .bind(id)
+        .execute(&state.db)
+        .await?;
+
+    if result.rows_affected() == 0 {
+        return Err(AppError(StatusCode::NOT_FOUND, "Consulta no encontrada".into()));
+    }
+
+    Ok(StatusCode::NO_CONTENT)
 }
 
 // --- OTROS ---

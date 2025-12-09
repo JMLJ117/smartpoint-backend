@@ -1,0 +1,25 @@
+{
+  "db_name": "MySQL",
+  "query": "SELECT id_usuario FROM usuario WHERE fldTelefono = ? OR fldCorreoElectronico = ?",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id_usuario",
+        "type_info": {
+          "type": "Long",
+          "flags": "NOT_NULL | PRIMARY_KEY | AUTO_INCREMENT",
+          "char_set": 63,
+          "max_size": 11
+        }
+      }
+    ],
+    "parameters": {
+      "Right": 2
+    },
+    "nullable": [
+      false
+    ]
+  },
+  "hash": "59b58dcc185814711de4bf8a9161bcc62752dab3c902b8eef3981072c8861453"
+}

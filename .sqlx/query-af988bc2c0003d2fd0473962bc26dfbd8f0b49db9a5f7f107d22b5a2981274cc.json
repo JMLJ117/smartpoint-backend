@@ -1,0 +1,25 @@
+{
+  "db_name": "MySQL",
+  "query": "SELECT telefono FROM cliente WHERE telefono = ? OR fldCorreoElectronico = ?",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "telefono",
+        "type_info": {
+          "type": "VarString",
+          "flags": "NOT_NULL | PRIMARY_KEY | NO_DEFAULT_VALUE",
+          "char_set": 224,
+          "max_size": 40
+        }
+      }
+    ],
+    "parameters": {
+      "Right": 2
+    },
+    "nullable": [
+      false
+    ]
+  },
+  "hash": "af988bc2c0003d2fd0473962bc26dfbd8f0b49db9a5f7f107d22b5a2981274cc"
+}
